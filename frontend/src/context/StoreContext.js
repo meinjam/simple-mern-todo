@@ -6,6 +6,7 @@ export default StoreContext;
 
 export function StoreProvider(props) {
   const [isDarkMode, setIsDarkMode] = useState(true);
+  const [isApiLoading, setIsApiLoading] = useState(true);
 
   useEffect(() => {
     document.body.classList.add('dark');
@@ -36,6 +37,8 @@ export function StoreProvider(props) {
       value={{
         isDarkMode,
         handleDarkMode,
+        isApiLoading,
+        setIsApiLoading,
       }}
     >
       {props.children}

@@ -9,9 +9,10 @@ import AddTodo from '../components/Homepage/AddTodo';
 import StoreContext from '../context/StoreContext';
 import TodoFooter from '../components/Homepage/TodoFooter';
 import { toast } from 'react-toastify';
+import Loading from '../components/Loading';
 
 const Home = () => {
-  const { handleDarkMode } = useContext(StoreContext);
+  const { handleDarkMode, isApiLoading, setIsApiLoading } = useContext(StoreContext);
   const [todos, setTodos] = useState([]);
   const [displayedTodos, setDisplayedTodos] = useState([]);
   const [inputValue, setInputValue] = useState('');
@@ -28,15 +29,19 @@ const Home = () => {
         // console.log(resp.data);
         setTodos(resp.data);
         setDisplayedTodos(resp.data);
+        setIsApiLoading(false);
       })
       .catch((error) => {
         console.log(error.response);
+        setIsApiLoading(false);
         toast.error('Sorry, something went wrong.');
       });
   };
 
   const handleAddTodo = (e) => {
     e.preventDefault();
+
+    setIsApiLoading(true);
 
     const newTodo = {
       name: inputValue,
@@ -49,14 +54,19 @@ const Home = () => {
         // console.log(resp.data);
         setInputValue('');
         fetchTodos();
+        setTimeout(() => {
+          toast.success(resp?.data?.message);
+        }, 500);
       })
       .catch((error) => {
         // console.log(error.response.data);
         toast.error(error?.response?.data);
+        setIsApiLoading(false);
       });
   };
 
   const toggleTodo = (todo) => {
+    setIsApiLoading(true);
     const newTodo = {
       name: todo.name,
       is_completed: !todo.is_completed,
@@ -67,25 +77,32 @@ const Home = () => {
       .then((resp) => {
         // console.log(resp.data);
         fetchTodos();
-        toast.success(resp?.data?.message);
+        setTimeout(() => {
+          toast.success(resp?.data?.message);
+        }, 500);
       })
       .catch((error) => {
         // console.log(error.response);
         toast.error(error?.response?.data?.error);
+        setIsApiLoading(false);
       });
   };
 
   const deleteTodo = (todo) => {
+    setIsApiLoading(true);
     axios
       .delete(`/todos/${todo.id}`)
       .then((resp) => {
         // console.log(resp.data);
         fetchTodos();
-        toast.success(resp?.data?.message);
+        setTimeout(() => {
+          toast.success(resp?.data?.message);
+        }, 500);
       })
       .catch((error) => {
         // console.log(error.response);
         toast.error(error?.response?.data?.error);
+        setIsApiLoading(false);
       });
   };
 
@@ -105,6 +122,7 @@ const Home = () => {
 
   return (
     <div>
+      {isApiLoading && <Loading />}
       <div className='min-h-screen bg-LightMyVeryLightGray dark:bg-DarkMyVeryDarkBlue text-LightMyVeryDarkGrayishBlue dark:text-DarkMyLightGrayishBlue'>
         <img className='w-full absolute dark:block hidden ' src={backgroundImage_desktop_dark} alt='nnnnn' />
         <img className='w-full absolute block dark:hidden' src={backgroundImage_desktop_light} alt='mmmmm' />
