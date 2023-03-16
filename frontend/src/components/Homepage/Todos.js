@@ -13,7 +13,7 @@ const Todos = ({ todos, toggleTodo, deleteTodo }) => {
             <div
               key={index}
               draggable={true}
-              className={`py-4 items-center justify-between border-b-[1px] cursor-move border-LightMyLightGrayishBlue hover:bg-LightMyLightGrayishBlue dark:border-DarkMyVeryDarkGrayishBlue dark:hover:bg-DarkMyVeryDarkGrayishBlue2 first:hover:rounded-t-md flex flex-row 
+              className={`py-4 items-center justify-between border-b-[1px] cursor-move border-LightMyLightGrayishBlue hover:bg-LightMyVeryLightGrayishBlue dark:border-DarkMyVeryDarkGrayishBlue dark:hover:bg-DarkMyVeryDarkGrayishBlue2 first:hover:rounded-t-md flex flex-row 
                     ${item.is_completed ? 'line-through text-DarkMyVeryDarkGrayishBlue' : ''}`}
             >
               <div className='flex items-center'>

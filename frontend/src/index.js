@@ -15,7 +15,7 @@ root.render(
     <StoreProvider>
       <Router>
         <App />
-        <ToastContainer position='bottom-right' theme='colored' autoClose={3000} />
+        <ToastContainer position='top-right' theme='colored' autoClose={3000} />
       </Router>
     </StoreProvider>
   </React.StrictMode>

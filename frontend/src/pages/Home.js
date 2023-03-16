@@ -25,7 +25,7 @@ const Home = () => {
     axios
       .get('/todos')
       .then((resp) => {
-        console.log(resp.data);
+        // console.log(resp.data);
         setTodos(resp.data);
         setDisplayedTodos(resp.data);
       })
@@ -67,9 +67,11 @@ const Home = () => {
       .then((resp) => {
         // console.log(resp.data);
         fetchTodos();
+        toast.success(resp?.data?.message);
       })
       .catch((error) => {
-        console.log(error.response);
+        // console.log(error.response);
+        toast.error(error?.response?.data?.error);
       });
   };
 
@@ -79,10 +81,11 @@ const Home = () => {
       .then((resp) => {
         // console.log(resp.data);
         fetchTodos();
-        // toast.success(error?.response?.data);
+        toast.success(resp?.data?.message);
       })
       .catch((error) => {
-        console.log(error.response);
+        // console.log(error.response);
+        toast.error(error?.response?.data?.error);
       });
   };
 
