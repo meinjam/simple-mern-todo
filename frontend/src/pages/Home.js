@@ -12,11 +12,13 @@ import { toast } from 'react-toastify';
 import Loading from '../components/Loading';
 
 const Home = () => {
-  const { handleDarkMode, isApiLoading, setIsApiLoading } = useContext(StoreContext);
+  const { handleDarkMode } = useContext(StoreContext);
   const [todos, setTodos] = useState([]);
   const [displayedTodos, setDisplayedTodos] = useState([]);
   const [inputValue, setInputValue] = useState('');
   const [activeTab, setActiveTab] = useState('All');
+
+  const [isApiLoading, setIsApiLoading] = useState(true);
 
   useEffect(() => {
     fetchTodos();
@@ -33,7 +35,7 @@ const Home = () => {
       })
       .catch((error) => {
         console.log(error.response);
-        setIsApiLoading(false);
+        // setIsApiLoading(false);
         toast.error('Sorry, something went wrong.');
       });
   };
