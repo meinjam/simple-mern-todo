@@ -20,7 +20,7 @@ const Home = () => {
 
   useEffect(() => {
     fetchTodos();
-  }, []);
+  });
 
   const fetchTodos = () => {
     axios
