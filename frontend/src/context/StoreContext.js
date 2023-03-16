@@ -5,25 +5,37 @@ const StoreContext = createContext();
 export default StoreContext;
 
 export function StoreProvider(props) {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true);
 
   useEffect(() => {
-    const getIsLoggedIn = localStorage.getItem('isLoggedIn');
+    document.body.classList.add('dark');
 
-    if (getIsLoggedIn) {
-      const parsegetIsLoggedIn = JSON.parse(getIsLoggedIn);
-      if (parsegetIsLoggedIn) {
-        setIsLoggedIn(true);
+    const getIsDarkMode = localStorage.getItem('isDarkMode');
+
+    if (getIsDarkMode) {
+      const parsegetIsDarkMode = JSON.parse(getIsDarkMode);
+      if (parsegetIsDarkMode) {
+        setIsDarkMode(true);
       } else {
-        setIsLoggedIn(false);
+        setIsDarkMode(false);
       }
     }
   }, []);
 
+  const handleDarkMode = (value) => {
+    setIsDarkMode(value);
+    if (value) {
+      document.body.classList.add('dark');
+    } else {
+      document.body.classList.remove('dark');
+    }
+  };
+
   return (
     <StoreContext.Provider
       value={{
-        isLoggedIn,
+        isDarkMode,
+        handleDarkMode,
       }}
     >
       {props.children}
