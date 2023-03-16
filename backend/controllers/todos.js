@@ -1,5 +1,5 @@
 const todosRouter = require('express').Router();
-const Todo = require('../models/todo');
+const { Todo, validate } = require('../models/todo');
 
 todosRouter.get('/', (request, response) => {
   Todo.find({}).then((notes) => {
@@ -8,6 +8,11 @@ todosRouter.get('/', (request, response) => {
 });
 
 todosRouter.post('/', async (request, response, next) => {
+  const { error } = validate(request.body);
+  if (error) {
+    return response.status(400).send(error.details[0].message);
+  }
+
   const body = request.body;
 
   const note = new Todo({

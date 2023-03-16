@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Joi = require('joi');
 
 const todoSchema = new mongoose.Schema({
   name: {
@@ -17,4 +18,17 @@ todoSchema.set('toJSON', {
   },
 });
 
-module.exports = mongoose.model('Todo', todoSchema);
+const validateTodo = (todo) => {
+  const schema = Joi.object({
+    name: Joi.string().min(3).max(100).required().label('todo'),
+  });
+
+  return schema.validate(todo);
+};
+
+const Todo = mongoose.model('Todo', todoSchema);
+
+module.exports = {
+  Todo,
+  validate: validateTodo,
+};
