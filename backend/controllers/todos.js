@@ -1,5 +1,6 @@
 const todosRouter = require('express').Router();
 const { Todo, validate } = require('../models/todo');
+const { responseMessage } = require('../utils/response.message');
 
 todosRouter.get('/', (request, response) => {
   Todo.find({}).then((notes) => {
@@ -21,7 +22,7 @@ todosRouter.post('/', async (request, response, next) => {
   });
 
   const savedNote = await note.save();
-  response.json(savedNote);
+  response.json(responseMessage(true, 'Todo added successfully.', savedNote));
 });
 
 todosRouter.get('/:id', (request, response, next) => {
@@ -52,7 +53,7 @@ todosRouter.put('/:id', (request, response, next) => {
 
   Todo.findByIdAndUpdate(request.params.id, note, { new: true, runValidators: true, context: 'query' })
     .then((updatedNote) => {
-      response.json(updatedNote);
+      response.json(responseMessage(true, 'Todo updated successfully.', updatedNote));
     })
     .catch((error) => next(error));
 });
@@ -62,7 +63,13 @@ todosRouter.delete('/:id', (request, response, next) => {
 
   Todo.findByIdAndRemove(id)
     .then((result) => {
-      response.status(204).end();
+      // response.status(204).end();
+      // response.status(200).json({
+      //   success: true,
+      //   message: 'Todo deleted successfully.',
+      // });
+
+      response.json(responseMessage(true, 'Todo deleted successfully.'));
     })
     .catch((error) => next(error));
 });

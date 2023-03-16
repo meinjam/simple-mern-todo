@@ -21,6 +21,7 @@ todoSchema.set('toJSON', {
 const validateTodo = (todo) => {
   const schema = Joi.object({
     name: Joi.string().min(3).max(100).required().label('todo'),
+    is_completed: Joi.boolean(),
   });
 
   return schema.validate(todo);

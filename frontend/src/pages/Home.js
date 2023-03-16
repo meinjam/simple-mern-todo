@@ -8,6 +8,7 @@ import Todos from '../components/Homepage/Todos';
 import AddTodo from '../components/Homepage/AddTodo';
 import StoreContext from '../context/StoreContext';
 import TodoFooter from '../components/Homepage/TodoFooter';
+import { toast } from 'react-toastify';
 
 const Home = () => {
   const { handleDarkMode } = useContext(StoreContext);
@@ -30,6 +31,7 @@ const Home = () => {
       })
       .catch((error) => {
         console.log(error.response);
+        toast.error('Sorry, something went wrong.');
       });
   };
 
@@ -49,7 +51,8 @@ const Home = () => {
         fetchTodos();
       })
       .catch((error) => {
-        console.log(error.response);
+        // console.log(error.response.data);
+        toast.error(error?.response?.data);
       });
   };
 
@@ -76,6 +79,7 @@ const Home = () => {
       .then((resp) => {
         // console.log(resp.data);
         fetchTodos();
+        // toast.success(error?.response?.data);
       })
       .catch((error) => {
         console.log(error.response);
